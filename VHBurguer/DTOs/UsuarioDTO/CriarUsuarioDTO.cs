@@ -1,4 +1,4 @@
-﻿namespace VHBurguer.DTOs
+﻿namespace VHBurguer.DTOs.UsuarioDTO
 {
     public class CriarUsuarioDTO
     {
@@ -6,7 +6,6 @@
         public string Email { get; internal set; }
         public string Senha { get; internal set; }
 
-        public CriarUsuarioDTO(){
-        }
+        public CriarUsuarioDTO(){ }
     }
 }

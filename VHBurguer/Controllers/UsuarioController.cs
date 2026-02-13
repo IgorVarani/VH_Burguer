@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using VHBurguer.Applications.Services;
-using VHBurguer.DTOs;
+using VHBurguer.DTOs.UsuarioDTO;
 using VHBurguer.Exceptions;
 
 namespace VHBurguer.Controllers
@@ -82,8 +82,7 @@ namespace VHBurguer.Controllers
             }
         }
 
-        [HttpDelete("{id}")] // "Delete" Remove dados.
-                             // No nosso banco o "Delete" vai apenas inativar o usuário por conta da trigger (isso é um soft delete).
+        [HttpDelete("{id}")] // "Delete" Remove dados. No nosso banco o "Delete" vai apenas inativar o usuário por conta da trigger (isso é um soft delete).
         public ActionResult Remover(int id)
         {
             try

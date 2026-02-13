@@ -62,6 +62,12 @@ public partial class VH_BurguerContext : DbContext
         {
             entity.HasKey(e => e.ProdutoID).HasName("PK__Produto__9C8800C3EAF37680");
 
+            entity.ToTable(tb =>
+                {
+                    tb.HasTrigger("trg_AlteracaoProduto");
+                    tb.HasTrigger("trg_ExclusaoProduto");
+                });
+
             entity.HasIndex(e => e.Nome, "UQ__Produto__7D8FE3B2BB75AF86").IsUnique();
 
             entity.Property(e => e.Nome)
@@ -118,6 +124,8 @@ public partial class VH_BurguerContext : DbContext
         modelBuilder.Entity<Usuario>(entity =>
         {
             entity.HasKey(e => e.UsuarioID).HasName("PK__Usuario__2B3DE7982C12EA45");
+
+            entity.ToTable(tb => tb.HasTrigger("trg_ExclusaoUsuario"));
 
             entity.HasIndex(e => e.Email, "UQ__Usuario__A9D105341C4741E6").IsUnique();
 

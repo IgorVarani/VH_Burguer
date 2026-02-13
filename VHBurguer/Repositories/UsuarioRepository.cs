@@ -6,8 +6,6 @@ namespace VHBurguer.Repositories
 {
     public class UsuarioRepository : IUsuarioRepository
     {
-        public UsuarioRepository()
-        { }
             private readonly VH_BurguerContext _context;
 
         public UsuarioRepository(VH_BurguerContext context)
