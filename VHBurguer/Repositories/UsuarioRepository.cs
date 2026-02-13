@@ -20,7 +20,7 @@ namespace VHBurguer.Repositories
             return _context.Usuario.ToList();
         }
 
-        public Usuario? ObterPorId(int id)
+        public Usuario? ObterPorID(int id)
         {
             // "Find" performa melhor com chave primária.
             return _context.Usuario.Find(id);
