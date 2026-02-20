@@ -29,7 +29,7 @@ namespace VHBurguer.Applications.Services
             return produtosDto;
         }
 
-        public LerProdutoDTO ObterPorId(int id)
+        public LerProdutoDTO ObterPorID(int id)
         {
             Produto produto = _repository.ObterPorID(id);
 
@@ -82,7 +82,7 @@ namespace VHBurguer.Applications.Services
             return imagem;
         }
 
-        public LerProdutoDTO Adicionar(CriarProdutoDTO produtoDTO, int usuarioId)
+        public LerProdutoDTO Adicionar(CriarProdutoDTO produtoDTO, int usuarioID)
         {
             ValidarCadastro(produtoDTO);
 
@@ -98,7 +98,7 @@ namespace VHBurguer.Applications.Services
                 Descricao = produtoDTO.Descricao,
                 Imagem = ImagemParaBytes.ConverterImagem(produtoDTO.Imagem),
                 StatusProduto = true,
-                UsuarioID = usuarioId
+                UsuarioID = usuarioID
             };
 
             _repository.Adicionar(produto, produtoDTO.CategoriaIDs);
