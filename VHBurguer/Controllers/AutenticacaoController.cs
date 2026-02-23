@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using VHBurguer.Applications.Services;
-using VHBurguer.DTOs.AutenticacaoDTO;
+using VHBurguer.DTOs.AutenticacaoDto;
 using VHBurguer.Exceptions;
 
 namespace VHBurguer.Controllers
@@ -18,11 +18,11 @@ namespace VHBurguer.Controllers
         }
 
         [HttpPost("login")]
-        public ActionResult<TokenDTO> Login(LoginDTO loginDTO)
+        public ActionResult<TokenDto> Login(LoginDto loginDto)
         {
             try
             {
-                var token = _service.Login(loginDTO);
+                var token = _service.Login(loginDto);
 
                 return Ok(token);
             }

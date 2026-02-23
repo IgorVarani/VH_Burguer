@@ -5,7 +5,7 @@ namespace VHBurguer.Domains;
 
 public partial class Produto
 {
-    public int ProdutoID { get; set; }
+    public int ProdutoId { get; set; }
 
     public string Nome { get; set; } = null!;
 
@@ -17,7 +17,7 @@ public partial class Produto
 
     public bool? StatusProduto { get; set; }
 
-    public int? UsuarioID { get; set; }
+    public int? UsuarioId { get; set; }
 
     public virtual ICollection<Log_AlteracaoProduto> Log_AlteracaoProduto { get; set; } = new List<Log_AlteracaoProduto>();
 

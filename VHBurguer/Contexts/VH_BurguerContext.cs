@@ -29,14 +29,14 @@ public partial class VH_BurguerContext : DbContext
     public virtual DbSet<Usuario> Usuario { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkId=2131148. For more guIdance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
         => optionsBuilder.UseSqlServer("Server=D20S30-1362981\\SQLEXPRESS;Database=VH_Burguer;Trusted_Connection=True;TrustServerCertificate=True");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Categoria>(entity =>
         {
-            entity.HasKey(e => e.CategoriaID).HasName("PK__Categori__F353C1C50464CF60");
+            entity.HasKey(e => e.CategoriaId).HasName("PK__Categori__F353C1C50464CF60");
 
             entity.Property(e => e.Nome)
                 .HasMaxLength(50)
@@ -45,7 +45,7 @@ public partial class VH_BurguerContext : DbContext
 
         modelBuilder.Entity<Log_AlteracaoProduto>(entity =>
         {
-            entity.HasKey(e => e.Log_AlteracaoProdutoID).HasName("PK__Log_Alte__D06C51B7543F630C");
+            entity.HasKey(e => e.Log_AlteracaoProdutoId).HasName("PK__Log_Alte__D06C51B7543F630C");
 
             entity.Property(e => e.DataAlteracao).HasPrecision(0);
             entity.Property(e => e.NomeAnterior)
@@ -54,13 +54,13 @@ public partial class VH_BurguerContext : DbContext
             entity.Property(e => e.PrecoAnterior).HasColumnType("decimal(10, 2)");
 
             entity.HasOne(d => d.Produto).WithMany(p => p.Log_AlteracaoProduto)
-                .HasForeignKey(d => d.ProdutoID)
+                .HasForeignKey(d => d.ProdutoId)
                 .HasConstraintName("FK__Log_Alter__Produ__5FB337D6");
         });
 
         modelBuilder.Entity<Produto>(entity =>
         {
-            entity.HasKey(e => e.ProdutoID).HasName("PK__Produto__9C8800C3EAF37680");
+            entity.HasKey(e => e.ProdutoId).HasName("PK__Produto__9C8800C3EAF37680");
 
             entity.ToTable(tb =>
                 {
@@ -77,42 +77,42 @@ public partial class VH_BurguerContext : DbContext
             entity.Property(e => e.StatusProduto).HasDefaultValue(true);
 
             entity.HasOne(d => d.Usuario).WithMany(p => p.Produto)
-                .HasForeignKey(d => d.UsuarioID)
+                .HasForeignKey(d => d.UsuarioId)
                 .HasConstraintName("FK__Produto__Usuario__5070F446");
 
             entity.HasMany(d => d.Categoria).WithMany(p => p.Produto)
                 .UsingEntity<Dictionary<string, object>>(
                     "ProdutoCategoria",
                     r => r.HasOne<Categoria>().WithMany()
-                        .HasForeignKey("CategoriaID")
+                        .HasForeignKey("CategoriaId")
                         .HasConstraintName("FK_ProdutoCategoria_Categoria"),
                     l => l.HasOne<Produto>().WithMany()
-                        .HasForeignKey("ProdutoID")
+                        .HasForeignKey("ProdutoId")
                         .HasConstraintName("FK_ProdutoCategoria_Produto"),
                     j =>
                     {
-                        j.HasKey("ProdutoID", "CategoriaID");
+                        j.HasKey("ProdutoId", "CategoriaId");
                     });
         });
 
         modelBuilder.Entity<ProdutoPromocao>(entity =>
         {
-            entity.HasKey(e => new { e.ProdutoID, e.PromocaoID });
+            entity.HasKey(e => new { e.ProdutoId, e.PromocaoId });
 
             entity.Property(e => e.PrecoAtual).HasColumnType("decimal(10, 2)");
 
             entity.HasOne(d => d.Produto).WithMany(p => p.ProdutoPromocao)
-                .HasForeignKey(d => d.ProdutoID)
+                .HasForeignKey(d => d.ProdutoId)
                 .HasConstraintName("FK_ProdutoPromocao_Produto");
 
             entity.HasOne(d => d.Promocao).WithMany(p => p.ProdutoPromocao)
-                .HasForeignKey(d => d.PromocaoID)
+                .HasForeignKey(d => d.PromocaoId)
                 .HasConstraintName("FK_ProdutoPromocao_Promocao");
         });
 
         modelBuilder.Entity<Promocao>(entity =>
         {
-            entity.HasKey(e => e.PromocaoID).HasName("PK__Promocao__254B583D86CE5D02");
+            entity.HasKey(e => e.PromocaoId).HasName("PK__Promocao__254B583D86CE5D02");
 
             entity.Property(e => e.DataExpiracao).HasPrecision(0);
             entity.Property(e => e.Nome)
@@ -123,7 +123,7 @@ public partial class VH_BurguerContext : DbContext
 
         modelBuilder.Entity<Usuario>(entity =>
         {
-            entity.HasKey(e => e.UsuarioID).HasName("PK__Usuario__2B3DE7982C12EA45");
+            entity.HasKey(e => e.UsuarioId).HasName("PK__Usuario__2B3DE7982C12EA45");
 
             entity.ToTable(tb => tb.HasTrigger("trg_ExclusaoUsuario"));
 

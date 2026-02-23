@@ -1,12 +1,12 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using VHBurguer.Applications.Autenticacao;
+using Microsoft.EntityFrameworkCore;
 using VHBurguer.Applications.Services;
 using VHBurguer.Contexts;
 using VHBurguer.Interfaces;
 using VHBurguer.Repositories;
+using VHBurguer.Applications.Autenticacao;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,7 +17,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Chamar nossa conexão com o banco aqui na Program.cs.
+// chamar nossa conexão com o banco aqui na program
 builder.Services.AddDbContext<VH_BurguerContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
 
 // Usuário
@@ -28,21 +28,22 @@ builder.Services.AddScoped<UsuarioService>();
 builder.Services.AddScoped<IProdutoRepository, ProdutoRepository>();
 builder.Services.AddScoped<ProdutoService>();
 
-// JWT
-builder.Services.AddScoped<GeradorTokenJWT>();
+// Jwt
+builder.Services.AddScoped<GeradorTokenJwt>();
 builder.Services.AddScoped<AutenticacaoService>();
 
+
 // Configura o sistema de autenticação da aplicação.
-// Aqui estamos dizendo que o tipo de autenticação padrão será JWT Bearer.
-// Ou seja: a API vai esperar receber um Token JWT nas requisições.
+// Aqui estamos dizendo que o tipo de autenticação padrão será Jwt Bearer.
+// Ou seja: a API vai esperar receber um Token Jwt nas requisições.
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
-    // Adiciona o suporte para autenticação usando JWT.
+    // Adiciona o suporte para autenticação usando Jwt.
     .AddJwtBearer(options =>
     {
-        // Lê a chave secreta definida no appsettings.json.
+        // Lê a chave secreta definIda no appsettings.json.
         // Essa chave é usada para ASSINAR o token quando ele é gerado
-        // e também para VALIDAR se o token recebido é verdadeiro.
+        // e também para ValidAR se o token recebIdo é verdadeiro.
         var chave = builder.Configuration["Jwt:Key"]!;
 
         // Quem emitiu o token (ex: nome da sua aplicação).
@@ -53,38 +54,39 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         // Também ajuda a garantir que o token pertence ao seu sistema.
         var audience = builder.Configuration["Jwt:Audience"]!;
 
-        // Define as regras que serão usadas para validar o token recebido.
+        // Define as regras que serão usadas para Validar o token recebIdo.
         options.TokenValidationParameters = new TokenValidationParameters
         {
-            // Verifica se o emissor do token é válido
+            // Verifica se o emissor do token é válIdo
             // (se bate com o issuer configurado).
             ValidateIssuer = true,
 
-            // Verifica se o destinatário do token é válido
+            // Verifica se o destinatário do token é válIdo
             // (se bate com o audience configurado).
             ValidateAudience = true,
 
-            // Verifica se o token ainda está dentro do prazo de validade.
+            // Verifica se o token ainda está dentro do prazo de Validade.
             // Se já expirou, a requisição será negada.
             ValidateLifetime = true,
 
-            // Verifica se a assinatura do token é válida.
+            // Verifica se a assinatura do token é válIda.
             // Isso garante que o token não foi alterado.
             ValidateIssuerSigningKey = true,
 
-            // Define qual emissor é considerado válido.
+            // Define qual emissor é consIderado válIdo.
             ValidIssuer = issuer,
 
-            // Define qual audience é considerado válido.
+            // Define qual audience é consIderado válIdo.
             ValidAudience = audience,
 
-            // Define qual chave será usada para validar a assinatura do token.
-            // A mesma chave usada na geração do JWT deve estar aqui.
+            // Define qual chave será usada para Validar a assinatura do token.
+            // A mesma chave usada na geração do Jwt deve estar aqui.
             IssuerSigningKey = new SymmetricSecurityKey(
                 Encoding.UTF8.GetBytes(chave)
             )
         };
     });
+
 
 var app = builder.Build();
 

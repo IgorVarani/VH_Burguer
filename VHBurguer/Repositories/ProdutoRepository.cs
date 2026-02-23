@@ -24,59 +24,59 @@ namespace VHBurguer.Repositories
             return produtos;
         }
 
-        public Produto ObterPorID(int id)
+        public Produto ObterPorId(int Id)
         {
             Produto? produto = _context.Produto
                 .Include(produtoDB => produtoDB.Categoria)
                 .Include(produtoDB => produtoDB.Usuario)
 
-                // Procura no banco (aux produtoDB) e verifica se o ID do produto no banco é igual ao ID passado como parâmetro no método "ObterPorID".
-                .FirstOrDefault(produtoDB => produtoDB.ProdutoID == id);
+                // Procura no banco (aux produtoDB) e verifica se o Id do produto no banco é igual ao Id passado como parâmetro no método "ObterPorId".
+                .FirstOrDefault(produtoDB => produtoDB.ProdutoId == Id);
 
             return produto;
         }
 
-        public bool NomeExiste(string nome, int? produtoIDAtual = null)
+        public bool NomeExiste(string nome, int? produtoIdAtual = null)
         {
             // AsQueryable() -> Monta a consulta para executar passo a passo, monta a consulta na tabela produto e não executa nada no banco ainda.
             var produtoConsultado = _context.Produto.AsQueryable();
 
             // Se o produto atual tiver valor, então atualizamos o produto.
-            if(produtoIDAtual.HasValue)
+            if(produtoIdAtual.HasValue)
             {
-                produtoConsultado = produtoConsultado.Where(produto => produto.ProdutoID != produtoIDAtual.Value);
+                produtoConsultado = produtoConsultado.Where(produto => produto.ProdutoId != produtoIdAtual.Value);
             }
 
             return produtoConsultado.Any(produto => produto.Nome == nome);
         }
 
-        public byte[] ObterImagem(int id)
+        public byte[] ObterImagem(int Id)
         {
             var produto = _context.Produto
-                .Where(produto => produto.ProdutoID == id)
+                .Where(produto => produto.ProdutoId == Id)
                 .Select(produto => produto.Imagem)
                 .FirstOrDefault();
 
             return produto;
         }
         
-        public void Adicionar(Produto produto, List<int> categoriaIDs)
+        public void Adicionar(Produto produto, List<int> categoriaIds)
         {
             List<Categoria> categorias = _context.Categoria
-                .Where(categoria => categoriaIDs.Contains(categoria.CategoriaID))
+                .Where(categoria => categoriaIds.Contains(categoria.CategoriaId))
                 .ToList(); // "Contains" retorna true se houver o registro.
 
-            produto.Categoria = categorias; // Adiciona as categorias incluidas ao produto.
+            produto.Categoria = categorias; // Adiciona as categorias incluIdas ao produto.
 
             _context.Produto.Add(produto);
             _context.SaveChanges();
         }
 
-        public void Atualizar(Produto produto, List<int> categoriaIDs)
+        public void Atualizar(Produto produto, List<int> categoriaIds)
         {
             Produto? produtoBanco = _context.Produto
                 .Include(produto => produto.Categoria)
-                .FirstOrDefault(produtoAux => produto.ProdutoID == produto.ProdutoID);
+                .FirstOrDefault(produtoAux => produto.ProdutoId == produto.ProdutoId);
 
             if(produtoBanco ==  null)
             {
@@ -97,9 +97,9 @@ namespace VHBurguer.Repositories
                 produtoBanco.StatusProduto = produto.StatusProduto;
             }
 
-            // Busca todas as categorias no banco com o ID igual das categorias que vieram da requisição/front.
+            // Busca todas as categorias no banco com o Id igual das categorias que vieram da requisição/front.
             var categorias = _context.Categoria
-                .Where(categoria => categoriaIDs.Contains(categoria.CategoriaID))
+                .Where(categoria => categoriaIds.Contains(categoria.CategoriaId))
                 .ToList();
 
             // Remove as ligações atuais entre o produto e as categorias. Ele não apaga a categoria do banco, só remove o vínculo com a tabela ProdutoCategoria.
@@ -113,9 +113,9 @@ namespace VHBurguer.Repositories
             _context.SaveChanges();
         }
 
-        public void Remover(int id)
+        public void Remover(int Id)
         {
-            Produto? produto = _context.Produto.FirstOrDefault(produto => produto.ProdutoID == id);
+            Produto? produto = _context.Produto.FirstOrDefault(produto => produto.ProdutoId == Id);
 
             if(produto == null)
             {

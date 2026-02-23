@@ -1,6 +1,6 @@
-﻿namespace VHBurguer.DTOs.ProdutoDTO
+﻿namespace VHBurguer.DTOs.ProdutoDto
 {
-    public class CriarProdutoDTO
+    public class CriarProdutoDto
     {
         public string Nome { get; set; } = null!;
 
@@ -8,8 +8,8 @@
 
         public string Descricao { get; set; } = null!;
 
-        public IFormFile Imagem { get; set; } = null!; // A imagem vem via multipart/form-data, ideal para upload de arquivos.
+        public IFormFile Imagem { get; set; } = null!; // A imagem vem via multipart/form-data, Ideal para upload de arquivos.
 
-        public List<int> CategoriaIDs { get; set; } = new();
+        public List<int> CategoriaIds { get; set; } = new();
     }
 }

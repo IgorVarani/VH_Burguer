@@ -1,10 +1,10 @@
 ﻿using VHBurguer.Domains;
 
-namespace VHBurguer.DTOs.ProdutoDTO
+namespace VHBurguer.DTOs.ProdutoDto
 {
-    public class LerProdutoDTO
+    public class LerProdutoDto
     {
-        public int ProdutoID { get; set; }
+        public int ProdutoId { get; set; }
 
         public string Nome { get; set; } = null!;
 
@@ -15,13 +15,13 @@ namespace VHBurguer.DTOs.ProdutoDTO
         public bool? StatusProduto { get; set; }
 
         // Categorias
-        public List<int> CategoriaIDs { get; set; } = new();
+        public List<int> CategoriaIds { get; set; } = new();
 
         public List<string> Categorias { get; set; } = new();
 
         // Usuário que cadastrou
 
-        public int? UsuarioID { get; set; }
+        public int? UsuarioId { get; set; }
         public string? UsuarioNome { get; set; }
         public string? UsuarioEmail { get; set; }
     }

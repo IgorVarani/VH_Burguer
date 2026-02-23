@@ -1,25 +1,26 @@
 ﻿using VHBurguer.Domains;
-using VHBurguer.DTOs.ProdutoDTO;
+using VHBurguer.DTOs.ProdutoDto;
+
 
 namespace VHBurguer.Applications.Conversoes
 {
-    public class ProdutoParaDTO
+    public class ProdutoParaDto
     {
-        public static LerProdutoDTO ConverterParaDTO(Produto produto)
+        public static LerProdutoDto ConverterParaDto(Produto produto)
         {
-            return new LerProdutoDTO
+            return new LerProdutoDto
             {
-                ProdutoID = produto.ProdutoID,
+                ProdutoId = produto.ProdutoId,
                 Nome = produto.Nome,
                 Preco = produto.Preco,
                 Descricao = produto.Descricao,
                 StatusProduto = produto.StatusProduto,
 
-                CategoriaIDs = produto.Categoria.Select(categoria => categoria.CategoriaID).ToList(),
+                CategoriaIds = produto.Categoria.Select(categoria => categoria.CategoriaId).ToList(),
 
                 Categorias = produto.Categoria.Select(categoria => categoria.Nome).ToList(),
 
-                UsuarioID = produto.UsuarioID,
+                UsuarioId = produto.UsuarioId,
                 UsuarioNome = produto.Usuario.Nome,
                 UsuarioEmail = produto.Usuario.Email
             };

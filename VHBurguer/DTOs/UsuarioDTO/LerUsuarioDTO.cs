@@ -1,8 +1,8 @@
-﻿namespace VHBurguer.DTOs.UsuarioDTO
+﻿namespace VHBurguer.DTOs.UsuarioDto
 {
-    public class LerUsuarioDTO
+    public class LerUsuarioDto
     {
-        public int UsuarioID { get; set; }
+        public int UsuarioId { get; set; }
 
         public string Nome { get; set; }
 

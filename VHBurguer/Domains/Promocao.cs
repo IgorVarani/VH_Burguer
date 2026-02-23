@@ -5,7 +5,7 @@ namespace VHBurguer.Domains;
 
 public partial class Promocao
 {
-    public int PromocaoID { get; set; }
+    public int PromocaoId { get; set; }
 
     public string Nome { get; set; } = null!;
 

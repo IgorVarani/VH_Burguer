@@ -1,7 +1,7 @@
 ﻿using VHBurguer.Applications.Conversoes;
 using VHBurguer.Applications.Regras;
 using VHBurguer.Domains;
-using VHBurguer.DTOs.ProdutoDTO;
+using VHBurguer.DTOs.ProdutoDto;
 using VHBurguer.Exceptions;
 using VHBurguer.Interfaces;
 
@@ -17,32 +17,32 @@ namespace VHBurguer.Applications.Services
         }
 
         // Para cada produto que veio do banco
-        // Crie um DTO só com o que a requisição/front precisa.
-        public List<LerProdutoDTO> Listar()
+        // Crie um Dto só com o que a requisição/front precisa.
+        public List<LerProdutoDto> Listar()
         {
             List<Produto> produtos = _repository.Listar();
 
-            // SELECT percorre cada Produto e transforma em DTO -> LerProdutoDto
-            List<LerProdutoDTO> produtosDto =
-                produtos.Select(ProdutoParaDTO.ConverterParaDTO).ToList();
+            // SELECT percorre cada Produto e transforma em Dto -> LerProdutoDto
+            List<LerProdutoDto> produtosDto =
+                produtos.Select(ProdutoParaDto.ConverterParaDto).ToList();
 
             return produtosDto;
         }
 
-        public LerProdutoDTO ObterPorID(int id)
+        public LerProdutoDto ObterPorId(int Id)
         {
-            Produto produto = _repository.ObterPorID(id);
+            Produto produto = _repository.ObterPorId(Id);
 
             if (produto == null)
             {
                 throw new DomainException("Produto não encontrado");
             }
 
-            // converte o produto encontrado para DTO e devolve
-            return ProdutoParaDTO.ConverterParaDTO(produto);
+            // converte o produto encontrado para Dto e devolve
+            return ProdutoParaDto.ConverterParaDto(produto);
         }
 
-        private static void ValidarCadastro(CriarProdutoDTO produtoDto)
+        private static void ValidarCadastro(CriarProdutoDto produtoDto)
         {
             if (string.IsNullOrWhiteSpace(produtoDto.Nome))
             {
@@ -64,15 +64,15 @@ namespace VHBurguer.Applications.Services
                 throw new DomainException("Imagem é obrigatória.");
             }
 
-            if (produtoDto.CategoriaIDs == null || produtoDto.CategoriaIDs.Count == 0)
+            if (produtoDto.CategoriaIds == null || produtoDto.CategoriaIds.Count == 0)
             {
                 throw new DomainException("Produto deve ter ao menos uma categoria.");
             }
         }
 
-        public byte[] ObterImagem(int id)
+        public byte[] ObterImagem(int Id)
         {
-            byte[] imagem = _repository.ObterImagem(id);
+            byte[] imagem = _repository.ObterImagem(Id);
 
             if (imagem == null || imagem.Length == 0)
             {
@@ -82,35 +82,35 @@ namespace VHBurguer.Applications.Services
             return imagem;
         }
 
-        public LerProdutoDTO Adicionar(CriarProdutoDTO produtoDTO, int usuarioID)
+        public LerProdutoDto Adicionar(CriarProdutoDto produtoDto, int usuarioId)
         {
-            ValidarCadastro(produtoDTO);
+            ValidarCadastro(produtoDto);
 
-            if (_repository.NomeExiste(produtoDTO.Nome))
+            if (_repository.NomeExiste(produtoDto.Nome))
             {
                 throw new DomainException("Produto já existente");
             }
 
             Produto produto = new Produto
             {
-                Nome = produtoDTO.Nome,
-                Preco = produtoDTO.Preco,
-                Descricao = produtoDTO.Descricao,
-                Imagem = ImagemParaBytes.ConverterImagem(produtoDTO.Imagem),
+                Nome = produtoDto.Nome,
+                Preco = produtoDto.Preco,
+                Descricao = produtoDto.Descricao,
+                Imagem = ImagemParaBytes.ConverterImagem(produtoDto.Imagem),
                 StatusProduto = true,
-                UsuarioID = usuarioID
+                UsuarioId = usuarioId
             };
 
-            _repository.Adicionar(produto, produtoDTO.CategoriaIDs);
+            _repository.Adicionar(produto, produtoDto.CategoriaIds);
 
-            return ProdutoParaDTO.ConverterParaDTO(produto);
+            return ProdutoParaDto.ConverterParaDto(produto);
         }
 
-        public LerProdutoDTO Atualizar(int id, AtualizarProdutoDTO produtoDTO)
+        public LerProdutoDto Atualizar(int Id, AtualizarProdutoDto produtoDto)
         {
             HorarioAlteracaoProduto.ValidarHorario();
 
-            Produto produtoBanco = _repository.ObterPorID(id);
+            Produto produtoBanco = _repository.ObterPorId(Id);
 
             if (produtoBanco == null)
             {
@@ -118,58 +118,53 @@ namespace VHBurguer.Applications.Services
             }
 
             // produtoIdAtual: -> dois pontos serve para passar o valor do parametro
-            if (_repository.NomeExiste(produtoDTO.Nome, produtoIDAtual: id))
+            if (_repository.NomeExiste(produtoDto.Nome, produtoIdAtual: Id))
             {
                 throw new DomainException("Já existe outro produto com esse nome.");
             }
 
-            if (produtoDTO.CategoriaIDs == null || produtoDTO.CategoriaIDs.Count == 0)
+            if (produtoDto.CategoriaIds == null || produtoDto.CategoriaIds.Count == 0)
             {
                 throw new DomainException("Produto deve ter ao menos uma categoria.");
             }
 
-            if (produtoDTO.Preco < 0)
+            if (produtoDto.Preco < 0)
             {
                 throw new DomainException("Preço deve ser maior que zero.");
             }
 
-            produtoBanco.Nome = produtoDTO.Nome;
-            produtoBanco.Preco = produtoDTO.Preco;
-            produtoBanco.Descricao = produtoDTO.Descricao;
+            produtoBanco.Nome = produtoDto.Nome;
+            produtoBanco.Preco = produtoDto.Preco;
+            produtoBanco.Descricao = produtoDto.Descricao;
 
-            if (produtoDTO.Imagem != null && produtoDTO.Imagem.Length > 0)
+            if (produtoDto.Imagem != null && produtoDto.Imagem.Length > 0)
             {
-                produtoBanco.Imagem = ImagemParaBytes.ConverterImagem(produtoDTO.Imagem);
+                produtoBanco.Imagem = ImagemParaBytes.ConverterImagem(produtoDto.Imagem);
             }
 
-            if (produtoDTO.StatusProduto.HasValue)
+            if (produtoDto.StatusProduto.HasValue)
             {
-                produtoBanco.StatusProduto = produtoDTO.StatusProduto.Value;
+                produtoBanco.StatusProduto = produtoDto.StatusProduto.Value;
             }
 
-            _repository.Atualizar(produtoBanco, produtoDTO.CategoriaIDs);
+            _repository.Atualizar(produtoBanco, produtoDto.CategoriaIds);
 
-            return ProdutoParaDTO.ConverterParaDTO(produtoBanco);
+            return ProdutoParaDto.ConverterParaDto(produtoBanco);
 
         }
 
-        public void Remover(int id)
+        public void Remover(int Id)
         {
             HorarioAlteracaoProduto.ValidarHorario();
 
-            Produto produto = _repository.ObterPorID(id);
+            Produto produto = _repository.ObterPorId(Id);
 
             if (produto == null)
             {
                 throw new DomainException("Produto não encontrado.");
             }
 
-            _repository.Remover(id);
-        }
-
-        internal LerProdutoDTO ObterPorID(int id)
-        {
-            throw new NotImplementedException();
+            _repository.Remover(Id);
         }
     }
 }

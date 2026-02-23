@@ -1,6 +1,6 @@
 ﻿using VHBurguer.Applications.Autenticacao;
 using VHBurguer.Domains;
-using VHBurguer.DTOs.AutenticacaoDTO;
+using VHBurguer.DTOs.AutenticacaoDto;
 using VHBurguer.Exceptions;
 using VHBurguer.Interfaces;
 
@@ -9,12 +9,12 @@ namespace VHBurguer.Applications.Services
     public class AutenticacaoService
     {
         private readonly IUsuarioRepository _repository;
-        private readonly GeradorTokenJWT _tokenJWT;
+        private readonly GeradorTokenJwt _tokenJwt;
 
-        public AutenticacaoService(IUsuarioRepository repository, GeradorTokenJWT tokenJWT)
+        public AutenticacaoService(IUsuarioRepository repository, GeradorTokenJwt tokenJwt)
         {
             _repository = repository;
-            _tokenJWT = tokenJWT;
+            _tokenJwt = tokenJwt;
         }
 
         // Compara a hash SHA256
@@ -26,25 +26,25 @@ namespace VHBurguer.Applications.Services
             return hashDigitado.SequenceEqual(senhaHashBanco);
         }
 
-        public TokenDTO Login(LoginDTO loginDTO)
+        public TokenDto Login(LoginDto loginDto)
         {
-            Usuario usuario = _repository.ObterPorEmail(loginDTO.Email);
+            Usuario usuario = _repository.ObterPorEmail(loginDto.Email);
 
             if (usuario == null)
             {
-                throw new DomainException("E-mail ou senha inválidos.");
+                throw new DomainException("E-mail ou senha inválIdos.");
             }
 
             // Comparar a senha digitada com a senha armazenada.
-            if(!VerificarSenha(loginDTO.Senha, usuario.Senha))
+            if(!VerificarSenha(loginDto.Senha, usuario.Senha))
             {
                 throw new DomainException("E-mail ou senha inváliods.");
             }
 
             // Gerando o token.
-            var token = _tokenJWT.GerarToken(usuario);
+            var token = _tokenJwt.GerarToken(usuario);
 
-            TokenDTO novoToken = new TokenDTO { Token = token };
+            TokenDto novoToken = new TokenDto { Token = token };
 
             return novoToken;
         }

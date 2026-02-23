@@ -18,10 +18,10 @@ namespace VHBurguer.Repositories
             return _context.Usuario.ToList();
         }
 
-        public Usuario? ObterPorID(int id)
+        public Usuario? ObterPorId(int Id)
         {
             // "Find" performa melhor com chave primária.
-            return _context.Usuario.Find(id);
+            return _context.Usuario.Find(Id);
         }
 
         public Usuario? ObterPorEmail(string email)
@@ -32,7 +32,7 @@ namespace VHBurguer.Repositories
 
         public bool EmailExiste(string email)
         {
-            // "Any" retorna true or false para validar se existe ALGUM usuário com esse e-mail.
+            // "Any" retorna true or false para Validar se existe ALGUM usuário com esse e-mail.
             return _context.Usuario.Any(usuario => usuario.Email == email);
         }
 
@@ -45,7 +45,7 @@ namespace VHBurguer.Repositories
         public void Atualizar(Usuario usuario)
         {
             Usuario? usuarioBanco =
-                _context.Usuario.FirstOrDefault(usuario => usuario.UsuarioID == usuario.UsuarioID);
+                _context.Usuario.FirstOrDefault(usuario => usuario.UsuarioId == usuario.UsuarioId);
 
             if(usuarioBanco == null)
             {
@@ -59,9 +59,9 @@ namespace VHBurguer.Repositories
             _context.SaveChanges();
         }
 
-        public void Remover(int id)
+        public void Remover(int Id)
         {
-            Usuario? usuario = _context.Usuario.FirstOrDefault(usuarioAux => usuarioAux.UsuarioID == id);
+            Usuario? usuario = _context.Usuario.FirstOrDefault(usuarioAux => usuarioAux.UsuarioId == Id);
 
             if(usuario == null)
             {

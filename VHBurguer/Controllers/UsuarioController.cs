@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using VHBurguer.Applications.Services;
-using VHBurguer.DTOs.UsuarioDTO;
+using VHBurguer.DTOs.UsuarioDto;
 using VHBurguer.Exceptions;
 
 namespace VHBurguer.Controllers
@@ -19,18 +19,18 @@ namespace VHBurguer.Controllers
 
         [HttpGet] // "GET" Lista informações.
 
-        public ActionResult<List<LerUsuarioDTO>> Listar()
+        public ActionResult<List<LerUsuarioDto>> Listar()
         {
-            List<LerUsuarioDTO> usuarios = _service.Listar();
+            List<LerUsuarioDto> usuarios = _service.Listar();
 
-            // Retorna a lista de usuários, a partir da DTO de Services.
+            // Retorna a lista de usuários, a partir da Dto de Services.
             return Ok(usuarios); // OK = 200 = Deu certo.
         }
 
-        [HttpGet("{id}")]
-        public ActionResult<LerUsuarioDTO> ObterPorID(int id)
+        [HttpGet("{Id}")]
+        public ActionResult<LerUsuarioDto> ObterPorId(int Id)
         {
-            LerUsuarioDTO usuario = _service.ObterPorID(id);
+            LerUsuarioDto usuario = _service.ObterPorId(Id);
             if (usuario == null)
             {
                 return NotFound(); // Erro 404 (StatusCode) = NÃO ENCONTRADO
@@ -40,9 +40,9 @@ namespace VHBurguer.Controllers
         }
 
         [HttpGet("email/{email}")]
-        public ActionResult<LerUsuarioDTO> ObterPorEmail(string email)
+        public ActionResult<LerUsuarioDto> ObterPorEmail(string email)
         {
-            LerUsuarioDTO usuario = _service.ObterPorEmail(email);
+            LerUsuarioDto usuario = _service.ObterPorEmail(email);
 
             if (usuario == null)
             {
@@ -53,11 +53,11 @@ namespace VHBurguer.Controllers
         }
 
         [HttpPost] // "POST" Envia dados.
-        public ActionResult<LerUsuarioDTO> Adicionar(CriarUsuarioDTO usuarioDTO)
+        public ActionResult<LerUsuarioDto> Adicionar(CriarUsuarioDto usuarioDto)
         {
             try
             {
-                LerUsuarioDTO usuarioCriado = _service.Adicionar(usuarioDTO);
+                LerUsuarioDto usuarioCriado = _service.Adicionar(usuarioDto);
 
                 return StatusCode(201, usuarioCriado);
             }
@@ -68,12 +68,12 @@ namespace VHBurguer.Controllers
             }
         }
 
-        [HttpPut("{id}")]
-        public ActionResult<LerUsuarioDTO> Atualizar(int id, CriarUsuarioDTO usuarioDTO)
+        [HttpPut("{Id}")]
+        public ActionResult<LerUsuarioDto> Atualizar(int Id, CriarUsuarioDto usuarioDto)
         {
             try
             {
-                LerUsuarioDTO usuarioAtualizado = _service.Atualizar(id, usuarioDTO);
+                LerUsuarioDto usuarioAtualizado = _service.Atualizar(Id, usuarioDto);
                 return StatusCode(200, usuarioAtualizado);
             }
             catch (DomainException ex)
@@ -82,12 +82,12 @@ namespace VHBurguer.Controllers
             }
         }
 
-        [HttpDelete("{id}")] // "Delete" Remove dados. No nosso banco o "Delete" vai apenas inativar o usuário por conta da trigger (isso é um soft delete).
-        public ActionResult Remover(int id)
+        [HttpDelete("{Id}")] // "Delete" Remove dados. No nosso banco o "Delete" vai apenas inativar o usuário por conta da trigger (isso é um soft delete).
+        public ActionResult Remover(int Id)
         {
             try
             {
-                _service.Remover(id);
+                _service.Remover(Id);
                 return NoContent();
             }
 

@@ -7,7 +7,7 @@ namespace VHBurguer.Interfaces
         List<Usuario> Listar();
 
         // Pode ser que não retorne usuários na busca, então coloca-se "?" para permitir ser nulo.
-        Usuario? ObterPorID(int id);
+        Usuario? ObterPorId(int Id);
 
         Usuario? ObterPorEmail(string email);
 
@@ -17,6 +17,6 @@ namespace VHBurguer.Interfaces
 
         void Atualizar(Usuario usuario);
 
-        void Remover(int id);
+        void Remover(int Id);
     }
 }

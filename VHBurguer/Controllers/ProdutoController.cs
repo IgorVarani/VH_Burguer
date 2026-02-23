@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using VHBurguer.Applications.Services;
-using VHBurguer.DTOs.ProdutoDTO;
+using VHBurguer.DTOs.ProdutoDto;
 using VHBurguer.Exceptions;
 
 namespace VHBurguer.Controllers
@@ -22,34 +22,34 @@ namespace VHBurguer.Controllers
         // autenticação do usuário
         private int ObterUsuarioIdLogado()
         {
-            // busca no token/claims o valor armazenado como id do usuário
-            // ClaimTypes.NameIdentifier geralmente guarda o ID do usuário no JWT
-            string? idTexto = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            // busca no token/claims o valor armazenado como Id do usuário
+            // ClaimTypes.NameIdentifier geralmente guarda o Id do usuário no Jwt
+            string? IdTexto = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            if (string.IsNullOrWhiteSpace(idTexto))
+            if (string.IsNullOrWhiteSpace(IdTexto))
             {
                 throw new DomainException("Usuário não autenticado");
             }
 
-            // Converte o ID que veio como texto para inteiro
-            // nosso UsuarioID no sistema está como int
+            // Converte o Id que veio como texto para inteiro
+            // nosso UsuarioId no sistema está como int
             // as Claims (informações do usuário dentro do token) sempre são armazenadas como texto.
-            return int.Parse(idTexto);
+            return int.Parse(IdTexto);
         }
 
         [HttpGet]
-        public ActionResult<List<LerProdutoDTO>> Listar()
+        public ActionResult<List<LerProdutoDto>> Listar()
         {
-            List<LerProdutoDTO> produtos = _service.Listar();
+            List<LerProdutoDto> produtos = _service.Listar();
 
             //return StatusCode(200, produtos);
             return Ok(produtos);
         }
 
-        [HttpGet("{id}")]
-        public ActionResult<LerProdutoDTO> ObterPorID(int id)
+        [HttpGet("{Id}")]
+        public ActionResult<LerProdutoDto> ObterPorId(int Id)
         {
-            LerProdutoDTO produto = _service.ObterPorID(id);
+            LerProdutoDto produto = _service.ObterPorId(Id);
 
             if (produto == null)
             {
@@ -61,12 +61,12 @@ namespace VHBurguer.Controllers
         }
 
         // GET -> api/produto/5/imagem
-        [HttpGet("{id}/imagem")]
-        public ActionResult ObterImagem(int id)
+        [HttpGet("{Id}/imagem")]
+        public ActionResult ObterImagem(int Id)
         {
             try
             {
-                var imagem = _service.ObterImagem(id);
+                var imagem = _service.ObterImagem(Id);
 
                 // Retorna o arquivo para o navegador
                 // "image/jpeg" informa o tipo da imagem (MIME type)
@@ -86,14 +86,14 @@ namespace VHBurguer.Controllers
         [Authorize] // exige login para adicionar produtos
 
         // [FromForm] -> diz que os dados vem do formulário da requisição (multipart/form-data)
-        public ActionResult Adicionar([FromForm] CriarProdutoDTO produtoDTO)
+        public ActionResult Adicionar([FromForm] CriarProdutoDto produtoDto)
         {
             try
             {
-                int usuarioID = ObterUsuarioIdLogado();
+                int usuarioId = ObterUsuarioIdLogado();
 
                 // o cadastro fica associado ao usuário logado
-                _service.Adicionar(produtoDTO, usuarioID);
+                _service.Adicionar(produtoDto, usuarioId);
 
                 return StatusCode(201); // Created
             }
@@ -103,14 +103,14 @@ namespace VHBurguer.Controllers
             }
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("{Id}")]
         [Consumes("multipart/form-data")]
         [Authorize]
-        public ActionResult Atualizar(int id, [FromForm] AtualizarProdutoDTO produtoDTO)
+        public ActionResult Atualizar(int Id, [FromForm] AtualizarProdutoDto produtoDto)
         {
             try
             {
-                _service.Atualizar(id, produtoDTO);
+                _service.Atualizar(Id, produtoDto);
                 return NoContent();
             }
             catch (DomainException ex)
@@ -119,13 +119,13 @@ namespace VHBurguer.Controllers
             }
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{Id}")]
         [Authorize]
-        public ActionResult Remover(int id)
+        public ActionResult Remover(int Id)
         {
             try
             {
-                _service.Remover(id);
+                _service.Remover(Id);
                 return NoContent();
             }
             catch (DomainException ex)

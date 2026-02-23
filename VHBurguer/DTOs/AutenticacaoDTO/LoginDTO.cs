@@ -1,6 +1,6 @@
-﻿namespace VHBurguer.DTOs.AutenticacaoDTO
+﻿namespace VHBurguer.DTOs.AutenticacaoDto
 {
-    public class LoginDTO
+    public class LoginDto
     {
         public string Email { get; set; } = null!;
 

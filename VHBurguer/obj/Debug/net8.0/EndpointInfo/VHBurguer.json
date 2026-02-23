@@ -14,17 +14,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/LoginDTO"
+                "$ref": "#/components/schemas/LoginDto"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/LoginDTO"
+                "$ref": "#/components/schemas/LoginDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/LoginDTO"
+                "$ref": "#/components/schemas/LoginDto"
               }
             }
           }
@@ -35,20 +35,188 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/TokenDTO"
+                  "$ref": "#/components/schemas/TokenDto"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/TokenDTO"
+                  "$ref": "#/components/schemas/TokenDto"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/TokenDTO"
+                  "$ref": "#/components/schemas/TokenDto"
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "/api/Categoria": {
+      "get": {
+        "tags": [
+          "Categoria"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LerCategoriaDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LerCategoriaDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LerCategoriaDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Categoria"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CriarCategoriaDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CriarCategoriaDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CriarCategoriaDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Categoria/{id}": {
+      "get": {
+        "tags": [
+          "Categoria"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/LerCategoriaDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LerCategoriaDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LerCategoriaDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Categoria"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CriarCategoriaDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CriarCategoriaDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CriarCategoriaDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Categoria"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
           }
         }
       }
@@ -66,7 +234,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/LerProdutoDTO"
+                    "$ref": "#/components/schemas/LerProdutoDto"
                   }
                 }
               },
@@ -74,7 +242,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/LerProdutoDTO"
+                    "$ref": "#/components/schemas/LerProdutoDto"
                   }
                 }
               },
@@ -82,7 +250,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/LerProdutoDTO"
+                    "$ref": "#/components/schemas/LerProdutoDto"
                   }
                 }
               }
@@ -114,7 +282,7 @@
                     "type": "string",
                     "format": "binary"
                   },
-                  "CategoriaIDs": {
+                  "CategoriaIds": {
                     "type": "array",
                     "items": {
                       "type": "integer",
@@ -136,7 +304,7 @@
                 "Imagem": {
                   "style": "form"
                 },
-                "CategoriaIDs": {
+                "CategoriaIds": {
                   "style": "form"
                 }
               }
@@ -150,14 +318,14 @@
         }
       }
     },
-    "/api/Produto/{id}": {
+    "/api/Produto/{Id}": {
       "get": {
         "tags": [
           "Produto"
         ],
         "parameters": [
           {
-            "name": "id",
+            "name": "Id",
             "in": "path",
             "required": true,
             "schema": {
@@ -172,17 +340,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/LerProdutoDTO"
+                  "$ref": "#/components/schemas/LerProdutoDto"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/LerProdutoDTO"
+                  "$ref": "#/components/schemas/LerProdutoDto"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/LerProdutoDTO"
+                  "$ref": "#/components/schemas/LerProdutoDto"
                 }
               }
             }
@@ -195,7 +363,7 @@
         ],
         "parameters": [
           {
-            "name": "id",
+            "name": "Id",
             "in": "path",
             "required": true,
             "schema": {
@@ -224,7 +392,7 @@
                     "type": "string",
                     "format": "binary"
                   },
-                  "CategoriaIDs": {
+                  "CategoriaIds": {
                     "type": "array",
                     "items": {
                       "type": "integer",
@@ -249,7 +417,7 @@
                 "Imagem": {
                   "style": "form"
                 },
-                "CategoriaIDs": {
+                "CategoriaIds": {
                   "style": "form"
                 },
                 "StatusProduto": {
@@ -271,7 +439,7 @@
         ],
         "parameters": [
           {
-            "name": "id",
+            "name": "Id",
             "in": "path",
             "required": true,
             "schema": {
@@ -287,14 +455,14 @@
         }
       }
     },
-    "/api/Produto/{id}/imagem": {
+    "/api/Produto/{Id}/imagem": {
       "get": {
         "tags": [
           "Produto"
         ],
         "parameters": [
           {
-            "name": "id",
+            "name": "Id",
             "in": "path",
             "required": true,
             "schema": {
@@ -323,7 +491,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/LerUsuarioDTO"
+                    "$ref": "#/components/schemas/LerUsuarioDto"
                   }
                 }
               },
@@ -331,7 +499,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/LerUsuarioDTO"
+                    "$ref": "#/components/schemas/LerUsuarioDto"
                   }
                 }
               },
@@ -339,7 +507,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/LerUsuarioDTO"
+                    "$ref": "#/components/schemas/LerUsuarioDto"
                   }
                 }
               }
@@ -355,17 +523,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CriarUsuarioDTO"
+                "$ref": "#/components/schemas/CriarUsuarioDto"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/CriarUsuarioDTO"
+                "$ref": "#/components/schemas/CriarUsuarioDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/CriarUsuarioDTO"
+                "$ref": "#/components/schemas/CriarUsuarioDto"
               }
             }
           }
@@ -376,17 +544,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/LerUsuarioDTO"
+                  "$ref": "#/components/schemas/LerUsuarioDto"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/LerUsuarioDTO"
+                  "$ref": "#/components/schemas/LerUsuarioDto"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/LerUsuarioDTO"
+                  "$ref": "#/components/schemas/LerUsuarioDto"
                 }
               }
             }
@@ -394,14 +562,14 @@
         }
       }
     },
-    "/api/Usuario/{id}": {
+    "/api/Usuario/{Id}": {
       "get": {
         "tags": [
           "Usuario"
         ],
         "parameters": [
           {
-            "name": "id",
+            "name": "Id",
             "in": "path",
             "required": true,
             "schema": {
@@ -416,17 +584,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/LerUsuarioDTO"
+                  "$ref": "#/components/schemas/LerUsuarioDto"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/LerUsuarioDTO"
+                  "$ref": "#/components/schemas/LerUsuarioDto"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/LerUsuarioDTO"
+                  "$ref": "#/components/schemas/LerUsuarioDto"
                 }
               }
             }
@@ -439,7 +607,7 @@
         ],
         "parameters": [
           {
-            "name": "id",
+            "name": "Id",
             "in": "path",
             "required": true,
             "schema": {
@@ -452,17 +620,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CriarUsuarioDTO"
+                "$ref": "#/components/schemas/CriarUsuarioDto"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/CriarUsuarioDTO"
+                "$ref": "#/components/schemas/CriarUsuarioDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/CriarUsuarioDTO"
+                "$ref": "#/components/schemas/CriarUsuarioDto"
               }
             }
           }
@@ -473,17 +641,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/LerUsuarioDTO"
+                  "$ref": "#/components/schemas/LerUsuarioDto"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/LerUsuarioDTO"
+                  "$ref": "#/components/schemas/LerUsuarioDto"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/LerUsuarioDTO"
+                  "$ref": "#/components/schemas/LerUsuarioDto"
                 }
               }
             }
@@ -496,7 +664,7 @@
         ],
         "parameters": [
           {
-            "name": "id",
+            "name": "Id",
             "in": "path",
             "required": true,
             "schema": {
@@ -533,17 +701,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/LerUsuarioDTO"
+                  "$ref": "#/components/schemas/LerUsuarioDto"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/LerUsuarioDTO"
+                  "$ref": "#/components/schemas/LerUsuarioDto"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/LerUsuarioDTO"
+                  "$ref": "#/components/schemas/LerUsuarioDto"
                 }
               }
             }
@@ -554,7 +722,17 @@
   },
   "components": {
     "schemas": {
-      "CriarUsuarioDTO": {
+      "CriarCategoriaDto": {
+        "type": "object",
+        "properties": {
+          "nome": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CriarUsuarioDto": {
         "type": "object",
         "properties": {
           "nome": {
@@ -572,10 +750,24 @@
         },
         "additionalProperties": false
       },
-      "LerProdutoDTO": {
+      "LerCategoriaDto": {
         "type": "object",
         "properties": {
-          "produtoID": {
+          "categoriaId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nome": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "LerProdutoDto": {
+        "type": "object",
+        "properties": {
+          "produtoId": {
             "type": "integer",
             "format": "int32"
           },
@@ -595,7 +787,7 @@
             "type": "boolean",
             "nullable": true
           },
-          "categoriaIDs": {
+          "categoriaIds": {
             "type": "array",
             "items": {
               "type": "integer",
@@ -610,7 +802,7 @@
             },
             "nullable": true
           },
-          "usuarioID": {
+          "usuarioId": {
             "type": "integer",
             "format": "int32",
             "nullable": true
@@ -626,10 +818,10 @@
         },
         "additionalProperties": false
       },
-      "LerUsuarioDTO": {
+      "LerUsuarioDto": {
         "type": "object",
         "properties": {
-          "usuarioID": {
+          "usuarioId": {
             "type": "integer",
             "format": "int32"
           },
@@ -647,7 +839,7 @@
         },
         "additionalProperties": false
       },
-      "LoginDTO": {
+      "LoginDto": {
         "type": "object",
         "properties": {
           "email": {
@@ -661,7 +853,7 @@
         },
         "additionalProperties": false
       },
-      "TokenDTO": {
+      "TokenDto": {
         "type": "object",
         "properties": {
           "token": {

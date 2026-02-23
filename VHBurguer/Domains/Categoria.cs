@@ -5,7 +5,7 @@ namespace VHBurguer.Domains;
 
 public partial class Categoria
 {
-    public int CategoriaID { get; set; }
+    public int CategoriaId { get; set; }
 
     public string Nome { get; set; } = null!;
 

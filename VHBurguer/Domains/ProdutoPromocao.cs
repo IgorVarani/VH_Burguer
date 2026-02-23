@@ -5,9 +5,9 @@ namespace VHBurguer.Domains;
 
 public partial class ProdutoPromocao
 {
-    public int PromocaoID { get; set; }
+    public int PromocaoId { get; set; }
 
-    public int ProdutoID { get; set; }
+    public int ProdutoId { get; set; }
 
     public decimal PrecoAtual { get; set; }
 
