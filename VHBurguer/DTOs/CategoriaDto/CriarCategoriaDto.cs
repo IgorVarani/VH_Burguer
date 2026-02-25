@@ -2,6 +2,6 @@
 {
     public class CriarCategoriaDto
     {
-        public string Nome { get; set; } = null;
+        public string Nome { get; set; } = null!;
     }
 }
