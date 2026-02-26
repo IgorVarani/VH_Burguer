@@ -1,10 +1,10 @@
 # VH_Burguer
 Este projeto é uma aplicação FullStack construída com foco em performance, escalabilidade e boas práticas de arquitetura moderna.
 
-========================================================
+
 🧠 Back-End
 Desenvolvido com .NET / ASP.NET Core, responsável por:
-========================================================
+
 
 -🔗 Construção de APIs RESTful.
 
@@ -16,10 +16,10 @@ Desenvolvido com .NET / ASP.NET Core, responsável por:
 
 -⚡ Alta performance e organização seguindo padrões sólidos.
 
-========================================================
+
 🎨 Front-End
 Construído com Next.js + React.js, garantindo:
-========================================================
+
 
 -⚛️ Componentização eficiente.
 
