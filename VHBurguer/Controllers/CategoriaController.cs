@@ -39,7 +39,6 @@ namespace VHBurguer.Controllers
         }
 
         [HttpPost] // "Post" --> Adicionar/Cadastrar.
-        [Authorize]
         public ActionResult Adicionar(CriarCategoriaDto criarDto)
         {
             try

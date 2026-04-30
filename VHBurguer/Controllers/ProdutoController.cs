@@ -83,7 +83,7 @@ namespace VHBurguer.Controllers
         // indica que recebe dados no formato multipart/form-data
         // necessário quando enviamos arquivos (ex. imagem do produto)
         [Consumes("multipart/form-data")]
-        [Authorize] // exige login para adicionar produtos
+        // [Authorize]
 
         // [FromForm] -> diz que os dados vem do formulário da requisição (multipart/form-data)
         public ActionResult Adicionar([FromForm] CriarProdutoDto produtoDto)
