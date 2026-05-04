@@ -17,8 +17,9 @@ namespace VHBurguer.Applications.Conversoes
                 StatusProduto = produto.StatusProduto,
 
                 CategoriaIds = produto.Categoria.Select(categoria => categoria.CategoriaId).ToList(),
-
                 Categorias = produto.Categoria.Select(categoria => categoria.Nome).ToList(),
+
+                ImagemUrl = $"produto/{produto.ProdutoId}/imagem",
 
                 UsuarioId = produto.UsuarioId,
                 UsuarioNome = produto.Usuario?.Nome,
