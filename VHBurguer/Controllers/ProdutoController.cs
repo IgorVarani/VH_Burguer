@@ -120,7 +120,7 @@ namespace VHBurguer.Controllers
         }
 
         [HttpDelete("{Id}")]
-        [Authorize]
+        // [Authorize]
         public ActionResult Remover(int Id)
         {
             try
