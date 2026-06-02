@@ -21,7 +21,7 @@ namespace VHBurguer.Applications.Autenticacao
         {
             // KEY -> chave secreta usada para assinar o token
             // garante que o token nao foi alterado
-            var chave = _config["Jwt:Key"]!;
+            var chave = Environment.GetEnvironmentVariable("JWT_Key");
 
             // ISSUER -> quem gerou o token (nome da API / sistema que gerou)
             // a API Valida se o token veio do emissor correto.

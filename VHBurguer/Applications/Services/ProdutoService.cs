@@ -1,4 +1,5 @@
-﻿using VHBurguer.Applications.Conversoes;
+﻿using VHBurguer.Applications.ContentSafety;
+using VHBurguer.Applications.Conversoes;
 using VHBurguer.Applications.Regras;
 using VHBurguer.Domains;
 using VHBurguer.DTOs.ProdutoDto;
@@ -10,10 +11,26 @@ namespace VHBurguer.Applications.Services
     public class ProdutoService
     {
         private readonly IProdutoRepository _repository;
+        private readonly IContentSafetyRepository _contentSafety;
 
-        public ProdutoService(IProdutoRepository repository)
+        public ProdutoService(IProdutoRepository repository, IContentSafetyRepository contentSafety)
         {
             _repository = repository;
+            _contentSafety = contentSafety;
+        }
+
+        private async Task ValidarConteudoProdutoAsync(string nome, string descricao)
+        {
+            string textoParaValidar = $@"
+                Nome do produto: {nome}
+                Descrição do produto: {descricao}";
+
+            var resultado = await _contentSafety.ValidarConteudo(textoParaValidar);
+
+            if(!resultado.aprovado)
+            {
+                throw new DomainException(resultado.msg);
+            }
         }
 
         // Para cada produto que veio do banco
@@ -82,9 +99,11 @@ namespace VHBurguer.Applications.Services
             return imagem;
         }
 
-        public LerProdutoDto Adicionar(CriarProdutoDto produtoDto, int usuarioId)
+        public async Task<LerProdutoDto> Adicionar(CriarProdutoDto produtoDto, int usuarioId)
         {
             ValidarCadastro(produtoDto);
+
+            await ValidarConteudoProdutoAsync(produtoDto.Nome, produtoDto.Descricao);
 
             if (_repository.NomeExiste(produtoDto.Nome))
             {

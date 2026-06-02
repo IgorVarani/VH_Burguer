@@ -86,15 +86,14 @@ namespace VHBurguer.Controllers
         [Authorize]
 
         // [FromForm] -> diz que os dados vem do formulário da requisição (multipart/form-data)
-        public ActionResult Adicionar([FromForm] CriarProdutoDto produtoDto)
+        public async Task<ActionResult> Adicionar([FromForm] CriarProdutoDto produtoDto)
         {
             try
             {
                 int usuarioId = ObterUsuarioIdLogado();
 
                 // o cadastro fica associado ao usuário logado
-                _service.Adicionar(produtoDto, usuarioId);
-
+                await _service.Adicionar(produtoDto, usuarioId);
                 return StatusCode(201); // Created
             }
             catch (DomainException ex)
